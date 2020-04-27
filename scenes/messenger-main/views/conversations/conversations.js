@@ -1,12 +1,19 @@
 import styles from './conversations.module.css'
 
-import { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import ReactDOM from 'react-dom'
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
+
+import ConversationList from './components/conversation-list'
+
+import UseWindowDimensions from '../../../../custom-hooks/use-window-dimensions'
 
 export default function Conversations() {
 
     const [dropdownOpen, setDropdownOpen] = useState(false);
-    const toggle = () => setDropdownOpen(prevState => !prevState);
+    const toggle = () => setDropdownOpen(prevState => !prevState);  
+    
+    // const { height, width } = UseWindowDimensions();
 
     const header_dropdown = {
         position: "absolute",
@@ -14,6 +21,7 @@ export default function Conversations() {
         marginRight: "1.5rem",
         color: "white",
     }
+    
 
     return (
         <div className={styles.base_container}>
@@ -37,8 +45,10 @@ export default function Conversations() {
 
                 </Dropdown>
             </div>
-            <p class="px-3">recent contacts works!</p>
+            <div className={styles.conversations_container}>
+                <ConversationList friendCount={25}></ConversationList>     
 
+            </div>
             
         </div>
     )
