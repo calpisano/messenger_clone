@@ -11,8 +11,8 @@ export default function Home() {
       </Head>
 
       <main>
-        <Link href="/old-readme"><a>old-readme</a></Link>
-        <Link href="/messenger-landing"><a>To Messenger</a></Link>
+        <Link href="/old-readme"><a>old-readme</a></Link><br />
+        <Link href="/messenger"><a>To Messenger</a></Link>
         
       </main>
 
@@ -150,21 +150,6 @@ export default function Home() {
             width: 100%;
             flex-direction: column;
           }
-        }
-      `}</style>
-
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
-        }
-
-        * {
-          box-sizing: border-box;
         }
       `}</style>
     </div>
