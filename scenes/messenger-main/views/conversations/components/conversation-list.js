@@ -1,4 +1,4 @@
-import { Container, Card, Row, Col } from 'reactstrap';
+import { Container } from 'reactstrap';
 
 import styles from './conversation-list.module.css'
 
@@ -24,7 +24,7 @@ function ListGenerator(props) {
 
 
     const array = props.array.slice()
-    console.log(array)
+    // console.log(array)
 
     const mapArray = array.map( (friend) => {
         return (
@@ -43,11 +43,6 @@ function ListGenerator(props) {
     })
 
     return mapArray
-
-        // <li className={styles.friendly_li}>
-        //     <img className={styles.friendly_face} src='/default-profile-pic.png' alt="profile pic" />
-        //     hello
-        // </li>
 }
 
 
@@ -56,6 +51,7 @@ function ListGenerator(props) {
 
 
 export default function ConversationList(props) {
+    // ConversationList returns a container enlosing a <ul> where each <li> is generated in ListGenerator()
 
     let objArray = objGenerator(props.friendCount);
 
