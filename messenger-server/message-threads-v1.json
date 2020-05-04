@@ -1,0 +1,104 @@
+{
+    "username_self": "bob",
+
+    "threads": {
+
+        "friend1": [
+            {
+                "text":"message0",
+                "timestamp":"0",
+                "sender":"friend"
+            },
+            {
+                "text": "message1",
+                "timestamp": "1",
+                "sender": "self"
+            },
+            {
+                "text": "message2",
+                "timestamp": "2",
+                "sender": "friend"
+            },
+            {
+                "text": "message3",
+                "timestamp": "3",
+                "sender": "self"
+            },
+            {
+                "text": "message4",
+                "timestamp": "4",
+                "sender": "friend"
+            },
+            {
+                "text": "message5",
+                "timestamp": "5",
+                "sender": "self"
+            },
+            {
+                "text": "message6",
+                "timestamp": "6",
+                "sender": "friend"
+            },
+            {
+                "text": "message7",
+                "timestamp": "7",
+                "sender": "self"
+            },
+            {
+                "text": "message8",
+                "timestamp": "8",
+                "sender": "friend"
+            },
+            {
+                "text": "message9",
+                "timestamp": "9",
+                "sender": "self"
+            },
+            {
+                "text": "message10",
+                "timestamp": "10",
+                "sender": "friend"
+            },
+            {
+                "text": "message11",
+                "timestamp": "11",
+                "sender": "self"
+            },
+            {
+                "text": "message12",
+                "timestamp": "12",
+                "sender": "friend"
+            },
+            {
+                "text": "message13",
+                "timestamp": "13",
+                "sender": "self"
+            },
+            {
+                "text": "message14",
+                "timestamp": "14",
+                "sender": "friend"
+            },
+            {
+                "text": "message15",
+                "timestamp": "15",
+                "sender": "self"
+            }
+        ],
+        "friend2": [
+            {
+                "text": "friend2 message1",
+                "timestamp": "2.1"
+            },
+            {
+                "text": "friend2 message2",
+                "timestamp": "2.2"
+            },
+            {
+                "text": "friend2 message3",
+                "timestamp": "2.3"
+            }
+        ]
+    }
+    
+}
