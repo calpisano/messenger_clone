@@ -1,11 +1,15 @@
-<<<<<<< HEAD
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/zeit/next.js/tree/canary/packages/create-next-app).
+
+## My Messenger Clone project
+
+Hi, I'm Chris and I am currently building a lite messenger web app. I am using React and Next.JS, for the front-end framework, and I am using NodeJS to simulate communication with a server. I haven't uploaded the code for the NodsJS server to GitHub but I will do so soon!
 
 ## Getting Started
 
 First, run the development server:
 
 ```bash
+npm intstall
 npm run dev
 # or
 yarn dev
@@ -13,23 +17,6 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/zeit/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on ZEIT Now
-
-The easiest way to deploy your Next.js app is to use the [ZEIT Now Platform](https://zeit.co/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 =======
 # messenger_clone
 A fun chat/messenger clone
->>>>>>> eb4cc50960d69c636f41e62042a5aab818b2acb2

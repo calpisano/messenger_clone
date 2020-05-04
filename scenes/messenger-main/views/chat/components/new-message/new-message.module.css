@@ -1,0 +1,7 @@
+
+.base_container{
+    position: relative;
+    display: block;
+    border: black solid 1px;
+    height: 10%;
+}

@@ -1,0 +1,25 @@
+.content {
+    background-color: aqua;
+    /* height and width should be 100% of parent. The parents should be height: 100vh, and width: 100vw */
+    height: 100%;
+    width: 100%;
+}
+
+.test {
+    background-color: red;
+}
+
+/* modifying reactstrap Row and Column elements produces unexpected results. It's better to create style objects in the .JS file and insert them into elements using style={ styleObject } */
+/* .row {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0; 
+} */
+
+/* .column {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0; 
+} */
