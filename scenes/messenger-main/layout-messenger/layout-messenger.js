@@ -24,11 +24,11 @@ export default function LayoutMessenger(props) {
     return(
         <div className={styles.content}>
             <Row style={ rowStyle }>
-                <Col md="4" style={ columnStyle }>
+                <Col md="3" style={ columnStyle }>
                     <Conversations />
                 </Col>
                 
-                <Col md="8" style={ columnStyle }>
+                <Col md="9" style={ columnStyle }>
                     <Chat />
                 </Col>
             </Row>

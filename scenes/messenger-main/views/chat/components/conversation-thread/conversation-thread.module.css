@@ -1,0 +1,18 @@
+
+.base_container {
+    position: relative;
+    display: block;
+    border: black solid 1px;
+    height: 90%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.my_message {
+    position: relative;
+
+}
+
+.their_message {
+    position: relative;
+}

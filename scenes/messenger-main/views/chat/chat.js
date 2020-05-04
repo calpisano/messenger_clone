@@ -1,14 +1,12 @@
 import styles from './chat.module.css'
-import ChatBox from './components/chat-box/chat-box'
 
-import ThemeContext from '../../../../react-context/ThemeContext'
+import ConversationThread from './components/conversation-thread/conversation-thread'
+import NewMessage from './components/new-message/new-message'
 
 
 
 // Chat is the component holding things related to the conversation, including the Friend's profile data (in the banner) and ChatBox, the component displaying all the messages 
 export default function Chat() {
-    const color = React.useContext(ThemeContext) // Consume context from (great?) grand-parent component
-    console.log(color)
 
     return(
         <div className={styles.base_container}>
@@ -21,14 +19,11 @@ export default function Chat() {
                     </div>
                 </div>
             </div>
-            <div className={styles.chat_box}>
-                {/* <p>{color}</p> */}
+            <div className={styles.chat_box_container}>
                 
-                <ChatBox />
-
-                
-
-                
+                <ConversationThread />
+                <NewMessage />
+  
 
             </div>
         </div>
