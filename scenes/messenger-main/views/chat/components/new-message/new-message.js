@@ -11,6 +11,8 @@ const fetch = require('node-fetch');
 //     // this.sendMessage()
 // }
 
+var someData
+
 
 class NewMessage extends React.Component {
 
@@ -43,8 +45,12 @@ class NewMessage extends React.Component {
             body: JSON.stringify(newMessage),
             headers: { 'Content-Type': 'application/json' }
             })
-            .then(res => res.text()) // expecting text response
-            .then(text => console.log("test" + text)) // log text response
+            .then(res => res.json()) // expecting textjson response, data is then interpreted as an object
+            .then(data => {
+                console.log("test " + data)
+                someData = data.threads.friend1
+                console.log(someData)
+            }) // should be [ object Object ] if res => res.json()
 
         //reset state
         this.setState({

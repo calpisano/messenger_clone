@@ -1,8 +1,6 @@
 {
     "username_self": "bob",
-
     "threads": {
-
         "friend1": [
             {
                 "text":"message0",

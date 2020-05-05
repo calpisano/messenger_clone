@@ -21,7 +21,7 @@ friends.time = time
 var newData
 newData = JSON.stringify(friends, null, 2)
 fs.writeFileSync('./messages.json', newData) //overwrite current messgaes.json file
-console.log(friends)
+// console.log(friends)
 
 // ~~~~~~~~~~~~~~~~~~~~~
 
@@ -39,7 +39,7 @@ console.log(friends)
 // })
 
 // get JSON data of various friend's convo threads.
-const testThread = fs.readFileSync('./message-threads-v1.json', 'utf8')
+const testThread = fs.readFileSync('./message-threads-v1.json', 'utf8') // testThread is a string
 
 const http = require('http')
 const hostName = '127.0.0.1' // 127.0.0.1 means "this computer"
@@ -75,27 +75,188 @@ const server = http.createServer((req, res) => {
 
     // url for client posting new message data
     if (req.url === '/post_obj') {
+        // let body = '' //initialize empty string to accept incoming data chunk
+        let parsedBody //initialize empty object into which body is parsed
 
         req.on('data', chunk => {
-            // data chunk should be stringified JSON file of a SPECIFIC friend's convo thread.
-            console.log(`Data chunk: ${chunk}`)
-            let newTestThread = (JSON.parse(testThread)).threads.friend1
-            newTestThread.push(JSON.parse(chunk))
-            // console.log(JSON.stringify(newTestThread))
-            fs.writeFileSync('./threads-copy.json', JSON.stringify(newTestThread, null, 2))
+            // IMPORTANT: req.on('data'...) executes AFTER req.on('end') for some reason
+            // chunk should be JSON buffer object. Req sent by client should be Content-type: 'application/json'
+            // console.log(chunk+'ji')
+
+            try {
+            parsedBody = JSON.parse(chunk)   // I need to parse body into a variable HERE, not in req.on('end'...) For some reason it won't work there
+            // parsedBody is now a traditional JS OBJECT, as opposed to buffer(?) object
+            // console.log('parsedBody: ' + parsedBody) <-- [ object Object ]
+
+            // let testObj = {a:4, b:4}
+            // console.log(JSON.parse(JSON.stringify(testObj)) + "what")
+
+            // console.log(`Data chunk append: ${JSON.stringify(parsedBody)}`) //print the string version of object
+            // // console.log(typeof JSON.stringify(parsedBody))
+            // // printing objects only results in [ object Object ]
+
+            // // console.log('data type ' + (typeof chunk))
+            // // console.log('data ' + chunk)
+            // // console.log(typeof parsedBody + "parsedbody type")
+            // // console.log("parsedBody.threads: "+parsedBody.threads)
+
+            // //continuing where I left off...
+            // let modifiedFile = JSON.parse(testThread) //testThread is a string, modifiedFile is now a JS object
+            // // console.log("modified File type: " + (typeof modifiedFile))
+            // // console.log("modifiedFile: " +modifiedFile)
+            // // console.log("modifiedFile Str: " + JSON.stringify(modifiedFile))
+
+            // let modifiedThread = (JSON.parse(testThread)).threads.friend1 // modifiedThread is an array of objects
+            // modifiedThread.push(parsedBody) // modifiedThread is now an array of N+1 objects
+            // // console.log('modifiedThread: '+ modifiedThread)
+            // // console.log('modifiedThread Str' + JSON.stringify(modifiedThread))
+            // // console.log('modifiedThread type: '+ (typeof modifiedThread))
+
+            // modifiedFile.threads.friend1 = modifiedThread // replace old convo thread
+            // // modifiedfile is still a JS object
+            // // console.log("new modified File type: " + (typeof modifiedFile))
+            // // console.log("new modifiedFile: " +modifiedFile)
+            // // console.log("new modifiedFile Str: " + JSON.stringify(modifiedFile))
+            
+
+
+            // console.log('before writeFileSync')
+            // fs.writeFileSync('./threads-copy.json', JSON.stringify(modifiedFile, null, 2)) // overwrite new data, but to new file to keep original data used
+
+            // ~~~~~~~ ANY CODE WRITTEN AFTER FS.WRITE IS NOT EXECUTED ~~~~~~~
+
+
+            // cannot write responses here...
+            // res.writeHead(200, {
+            //     "Access-Control-Allow-Origin" : "*",
+            //     "Access-Control-Allow-Headers" : "Content-Type",
+            //     "Access-Control-Allow-Methods" : "POST, GET, OPTIONS",
+            //     "Content-Type": 'text/plain' // This is assuming server's response will be a simple text response
+            // })
+
+            // res.end('test2')
+            
+            }
+            catch(error) {
+                console.error(error)
+            }
+            
+            
         })
         req.on('end', () => {
-            // end of data, do something, if I want 
-        })
+            // this code gets executed BEFORE req.on('data') for some reason
+            // but ALSO, for some reason, responses generated here using file data have the most up to date data, despite any other code bein executed first.
+            // console.log('end' + body)
+            try {
 
-        // * explicitly * set my headers, while returning a status code of 200 (initial argument)
-        res.writeHead(200, {
-            "Access-Control-Allow-Origin" : "*",
-            "Access-Control-Allow-Headers" : "Content-Type",
-            "Access-Control-Allow-Methods" : "POST, GET, OPTIONS",
-            "Content-Type": 'text/plain' // This is assuming server's response will be a simple text response
+                console.log(`Data chunk append: ${JSON.stringify(parsedBody)}`) //print the string version of object
+                // console.log(typeof JSON.stringify(parsedBody))
+                // printing objects only results in [ object Object ]
+
+                // console.log('data type ' + (typeof chunk))
+                // console.log('data ' + chunk)
+                // console.log(typeof parsedBody + "parsedbody type")
+                // console.log("parsedBody.threads: "+parsedBody.threads)
+
+                //continuing where I left off...
+                let modifiedFile = JSON.parse(testThread) //testThread is a string, modifiedFile is now a JS object
+                // console.log("modified File type: " + (typeof modifiedFile))
+                // console.log("modifiedFile: " +modifiedFile)
+                // console.log("modifiedFile Str: " + JSON.stringify(modifiedFile))
+
+                let modifiedThread = (JSON.parse(testThread)).threads.friend1 // modifiedThread is an array of objects
+                modifiedThread.push(parsedBody) // modifiedThread is now an array of N+1 objects
+                // console.log('modifiedThread: '+ modifiedThread)
+                // console.log('modifiedThread Str' + JSON.stringify(modifiedThread))
+                // console.log('modifiedThread type: '+ (typeof modifiedThread))
+
+                modifiedFile.threads.friend1 = modifiedThread // replace old convo thread
+                // modifiedfile is still a JS object
+                // console.log("new modified File type: " + (typeof modifiedFile))
+                // console.log("new modifiedFile: " +modifiedFile)
+                // console.log("new modifiedFile Str: " + JSON.stringify(modifiedFile))
+                
+
+
+                
+                
+                    
+
+                // const responseFile = fs.readFileSync('./threads-copy.json', 'utf8')
+                const responseFile = JSON.stringify(modifiedFile, null, 2)
+                // responseFile is a string as-is, send simply as res.end(responseFile) and 'application/json'
+
+
+                console.log('response sent')
+                res.writeHead(200, {
+                    "Access-Control-Allow-Origin" : "*",
+                    "Access-Control-Allow-Headers" : "Content-Type",
+                    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS",
+                    "Content-Type": 'application/json'
+                })
+                res.end(responseFile)
+
+                // console.log('before writeFileSync')
+                let dataInsert = JSON.stringify(modifiedFile, null, 2)
+                fs.writeFile('./threads-copy.json', dataInsert, (err) => {
+                    if (err) return console.error(err);
+                    console.log('writeFile success')
+                }) // overwrite new data, but to new file to keep original data used
+
+                // ANY CODE AFTER WRITEFILE IS NOT EXECUTED
+            }
+            catch (error) {
+                res.statusCode = 400
+                console.error(error)
+                return res.end(`error: ${error.message}`)
+            }
         })
-        res.end("testing!!!!")
+        // res.writeHead(200, {
+        //     "Access-Control-Allow-Origin" : "*",
+        //     "Access-Control-Allow-Headers" : "Content-Type",
+        //     "Access-Control-Allow-Methods" : "POST, GET, OPTIONS",
+        //     "Content-Type": 'text/plain' // This is assuming server's response will be a simple text response
+        // })
+        // res.end('end response!')
+/*         req.on('end', () => {
+            // end of data, do something, if I want 
+            try {
+                let newTestThread = (JSON.parse(testThread)).threads.friend1
+                newTestThread.push(JSON.parse(body))
+
+                fs.writeFileSync('./threads-copy.json', JSON.stringify(newTestThread, null, 2))
+
+                // after receiving data chunk and writing to JSON file, respond with updated chat file
+                // * explicitly * set my headers, while returning a status code of 200 (initial argument). Here I enable CORS for http
+
+                res.writeHead(200, {
+                    "Access-Control-Allow-Origin" : "*",
+                    "Access-Control-Allow-Headers" : "Content-Type",
+                    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS",
+                    "Content-Type": 'text/plain' // This is assuming server's response will be a simple text response
+                })
+                let responseThread  = fs.readFileSync('./threads-copy.json', 'utf8')
+                res.end("responseThread")
+
+
+            } catch (err) {
+                res.statusCode = 400
+                console.error(err)
+                return res.end(`error: ${err.message}`)
+            }
+        }) */
+
+        // console.log('tick2')
+        // res.writeHead(200, {
+        //     "Access-Control-Allow-Origin" : "*",
+        //     "Access-Control-Allow-Headers" : "Content-Type",
+        //     "Access-Control-Allow-Methods" : "POST, GET, OPTIONS",
+        //     "Content-Type": 'text/plain' // This is assuming server's response will be a simple text response
+        // })
+
+        // res.end('test2')
+
+        // console.log('last line of code')
 
     }
 })
