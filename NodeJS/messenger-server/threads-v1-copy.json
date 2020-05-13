@@ -84,7 +84,12 @@
             },
             {
                 "text": "manual update of chat",
-                "timestamp": "10:57:56:293",
+                "timestamp": "11:3:27:790",
+                "sender": "self"
+            },
+            {
+                "text": "manual update of chat",
+                "timestamp": "11:3:31:142",
                 "sender": "self"
             }
         ],
