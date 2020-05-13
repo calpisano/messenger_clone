@@ -2,9 +2,10 @@
 .base_container {
     position: relative;
     display: block;
+    background-color: white;
     border: black solid 1px;
     height: 90%;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
 }
 
@@ -15,4 +16,57 @@
 
 .their_message {
     position: relative;
+}
+
+.chat_row {
+    width: 100%;
+    position: relative;
+    display: block;
+    height: 100px;
+}
+
+.chat_bubble_self {
+    /* shared properties with .chat_bubble_friend */
+    max-width: 400px;
+    position: absolute;
+    padding: 0.75rem 1rem 0.75rem 1rem;
+    border-radius: 0.5rem;
+
+    /* exclusive properties */
+    background-color: #3b5998;
+    right: 0;
+    margin-right: 1.5rem;
+    
+}
+
+.chat_bubble_self p {
+    /* shared properties with .chat_bubble_friend p */
+    margin: 0;
+
+
+    /* exclusive properties */
+    color: white;
+}
+
+
+.chat_bubble_friend {
+    /* shared properties with .chat_bubble_self */
+    max-width: 400px;
+    position: absolute;
+    padding: 0.75rem 1rem 0.75rem 1rem;
+    border-radius: 0.5rem;
+
+    /* exclusive properties */
+    background-color: gainsboro;
+    left: 0;
+    margin-left: 1.5rem;
+   
+}
+
+.chat_bubble_friend p {
+    /* shared properties with .chat_bubble_self p */
+    margin: 0;
+
+    /* exclusive properties */
+    color: black;
 }
