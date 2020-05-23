@@ -5,12 +5,19 @@
 }
 
 .friendly_li {
-    height: 5rem;
+    height: 6rem;
     /* border: green solid 1px; */
     margin-bottom: 0.2rem;
 
     display: flex;
     flex-direction: row;
+
+    cursor: pointer;
+}
+
+.friendly_selected {
+    /* border: green solid 1px; */
+    background-color: gainsboro;
 }
 
 .friendly_li:last-child {
@@ -20,8 +27,8 @@
 .friendly_face {
 
     align-self: center;
-    height: 80%;
-    width: auto;
+    height: auto;
+    width: 20%;
     margin-left: 0.8rem;
 
     border-radius: 50%;
@@ -35,7 +42,7 @@
 .friendly_text_holder {
     align-self: center;
     height: 100%;
-    /* width: 200px; */
+    width: 65%;
     /* border: blue solid 1px; */
     
     padding: 1rem 0 1rem 0;
@@ -48,9 +55,18 @@
 }
 
 .friendly_name {
+
     width: 100%;
+    height: 1.3em;
     padding: 0;
     margin: 0;
+    
+
+    /* The following is required for truncating with ellipsis */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
 }
 
 .friendly_message {

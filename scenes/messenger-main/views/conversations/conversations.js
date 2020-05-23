@@ -1,13 +1,11 @@
 import styles from './conversations.module.css'
 
-import React, { useState, useEffect } from 'react'
-import ReactDOM from 'react-dom'
+import React, { useState } from 'react'
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 
 import ConversationList from './components/conversation-list'
 
-import UseWindowDimensions from '../../../../custom-hooks/use-window-dimensions'
-
+// Conversations() is the 'left-side column' of the screen containing the user's profile banner and friends list.
 export default function Conversations() {
 
     const [dropdownOpen, setDropdownOpen] = useState(false);

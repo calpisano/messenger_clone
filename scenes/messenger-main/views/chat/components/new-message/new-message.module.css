@@ -1,7 +1,49 @@
 
-.base_container{
+.base_container {
     position: relative;
     display: block;
-    border: black solid 1px;
-    height: 10%;
+    /* border: black solid 1px; */
+    top: -3rem; /* top and height props must be equal and opposite, so that container sits at bottom of page "on top" of convestaion-thread.js*/
+    height: 3rem;
+    width: 100%;
+    background-color: white;
+
+}
+
+.new_message_wrapper {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+}
+
+.new_message_wrapper form {
+
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.text_input {
+    background-color: #f1f0f0;
+    border: none;
+    height: 2rem;
+    border-radius: 1rem;
+    padding: 0 0.5rem 0 0.5rem;
+    width: 80%;
+
+}
+
+.text_submit_button {
+    color: white;
+    background-color: #0099FF;
+    height: 2rem;
+    width: 75px;
+    border: none;
+    border-radius: 1rem;
+    margin-left: 1rem;
 }

@@ -17,15 +17,13 @@ var initialFriendUID;
 
 
 
-export default function MessengerLanding({ allDataChunk, allUsersDB, allMessagesDB, initialFriendSelect }) {
+export default function MessengerLanding({ allDataChunk, initialFriendSelect }) {
     // prop: allDataChunk is a JS object
 
     // changes in state cause re-rendering. In this case, will also pass a prop to child subscribers of data which also re-render
     const [ masterData, updateMasterData ] = useState( allDataChunk ); //this is only executed one time, no matter how many
     const [ currentFriendUID , updateCurrentFriendUID ] = useState(initialFriendSelect);
 
-    const [ messageDataDB, updateMasterDataDB ] = useState( allMessagesDB ); // type string
-    const [ friendsList , updateFriendsList ] = useState( allUsersDB ); // type string
 
     // console.log("currentFriendUID: "+ currentFriendUID);
     
@@ -115,9 +113,6 @@ export default function MessengerLanding({ allDataChunk, allUsersDB, allMessages
                         onClick={() => sendMessageFunc('manual update of chat')}>
                         Manually update thread data
                     </button>
-                    <p>
-                        {friendsList}
-                    </p>
                 </div>
 
                 
@@ -134,30 +129,13 @@ export async function getServerSideProps() {
     // https://nextjs.org/blog/next-9-3 <-- next.js docs on getServerSideProps()
     
     // dev test getting text data from server
-    // const resTest = await fetch(`http://127.0.0.1:8080/`);
-    // const testMessage = await resTest.text();
-    // console.log(testMessage);
-
-    const resTest2 = await fetch(`http://127.0.0.1:9090/`);
-    const testMessage2 = await resTest2.text();
-    console.log(testMessage2);
+    const resTest = await fetch(`http://127.0.0.1:8080/`);
+    const testMessage = await resTest.text();
+    console.log(testMessage);
 
     const resAllData = await fetch(`http://127.0.0.1:8080/get_initial_thread`);
     const allDataChunk = await resAllData.json(); //res.body is received in json string and subsequently PARSED, devTest2 is now an object
 
-
-    const resThreadsDB = await fetch(`http://127.0.0.1:9090/get_initial_chat_thread`);
-    const allThreadsDB = await resThreadsDB.text() // type String
-
-    const resUsersDB = await fetch(`http://127.0.0.1:9090/get_initial_chat_user`);
-    const allUsersDB = await resUsersDB.text(); // type String
-    
-
-    const resAllMessagesDB = await fetch(`http://127.0.0.1:9090/get_initial_chat_lines`);
-    const allMessagesDB = await resAllMessagesDB.text(); // type String
-
-
-    // console.log(typeof allFriendsDB);
 
 
     const initialFriendSelect = "1001"; // when this web page is first open, initially go to this default friend
@@ -167,10 +145,8 @@ export async function getServerSideProps() {
     //  passed to the `Home` component
     return {
       props: {
+        testMessage,
         allDataChunk,
-        allThreadsDB,
-        allMessagesDB,
-        allUsersDB,
         initialFriendSelect
       }
     }
