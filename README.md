@@ -1,4 +1,22 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/zeit/next.js/tree/canary/packages/create-next-app).
+Technologies and Packages installed:
+
+Client-side:
+React
+NextJS
+Bootstrap
+Reactstrap
+
+Server-side:
+NodeJS
+Express
+node-postgres
+
+Database:
+PostgreSQL
+
+
+
+<!-- <!-- This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/zeit/next.js/tree/canary/packages/create-next-app). -->
 
 ## My Messenger Clone project
 
@@ -19,4 +37,4 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 =======
 # messenger_clone
-A fun chat/messenger clone
+A fun chat/messenger clone -->

@@ -1,6 +1,6 @@
 import styles from './chat.module.css'
 
-import ConversationThread from './components/conversation-thread/conversation-thread'
+import ChatThread from './components/conversation-thread/chat-thread'
 import NewMessage from './components/new-message/new-message'
 
 
@@ -21,7 +21,7 @@ export default function Chat() {
             </div>
             <div className={styles.chat_box_container}>
                 
-                <ConversationThread />
+                <ChatThread />
                 <NewMessage />
   
 
