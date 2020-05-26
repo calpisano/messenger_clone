@@ -30,12 +30,12 @@ CREATE TABLE IF NOT EXISTS messenger.chat_line (
     created_at_timestamp TIMESTAMPTZ NOT NULL
 );
 
-insert into messenger.chat_user (user_uid, first_name, last_name, email, gender, date_of_birth, profile_pic) values (uuid_generate_v4(), 'Myra', 'Selfie', 'myraselfie@gmail.com', 'Female', '1991-01-01', '/default-profile-pic.png');
+insert into messenger.chat_user (user_uid, first_name, last_name, email, gender, date_of_birth, profile_pic) values (uuid_generate_v4(), 'Myra', 'Selfie', 'myraselfie@gmail.com', 'Female', '1991-01-01', '/myra-selfie.jpg');
 
-insert into messenger.chat_user (user_uid, first_name, last_name, email, gender, date_of_birth, profile_pic) values (uuid_generate_v4(), 'Elmore', 'Greswell', 'nusluis3@domainmarket.com', 'Male', '1991-05-06', '/default-profile-pic.png');
-insert into messenger.chat_user (user_uid, first_name, last_name, email, gender, date_of_birth, profile_pic) values (uuid_generate_v4(), 'Derry', 'Singh', 'dsingh1@newsvine.com', 'Male', '1981-08-16', '/default-profile-pic.png');
-insert into messenger.chat_user (user_uid, first_name, last_name, email, gender, date_of_birth, profile_pic) values (uuid_generate_v4(), 'Chane', 'Ambroisin', 'cambroisin2@blogtalkradio.com', 'Female', '2003-01-12', '/default-profile-pic.png');
-insert into messenger.chat_user (user_uid, first_name, last_name, email, gender, date_of_birth, profile_pic) values (uuid_generate_v4(), 'Sarge', 'Luis', 'sluis23@domainmarket.com', 'Male', '1990-09-10', '/default-profile-pic.png');
+insert into messenger.chat_user (user_uid, first_name, last_name, email, gender, date_of_birth, profile_pic) values (uuid_generate_v4(), 'Elmore', 'Greswell', 'nusluis3@domainmarket.com', 'Male', '1991-05-06', '/elmore-greswell.png');
+insert into messenger.chat_user (user_uid, first_name, last_name, email, gender, date_of_birth, profile_pic) values (uuid_generate_v4(), 'Derry', 'Singh', 'dsingh1@newsvine.com', 'Male', '1981-08-16', '/derry-singh.png');
+insert into messenger.chat_user (user_uid, first_name, last_name, email, gender, date_of_birth, profile_pic) values (uuid_generate_v4(), 'Chane', 'Ambroisin', 'cambroisin2@blogtalkradio.com', 'Female', '2003-01-12', '/chane-ambroisin.png');
+insert into messenger.chat_user (user_uid, first_name, last_name, email, gender, date_of_birth, profile_pic) values (uuid_generate_v4(), 'Sarge', 'Luis', 'sluis23@domainmarket.com', 'Male', '1990-09-10', '/sarge-luis.png');
 insert into messenger.chat_user (user_uid, first_name, last_name, email, gender, date_of_birth, profile_pic) values (uuid_generate_v4(), 'Annie', 'Oby', 'bobroyd5@yahoo.com', 'Female', '2004-04-22', '/annie-oby.png');
 insert into messenger.chat_user (user_uid, first_name, last_name, email, gender, date_of_birth, profile_pic) values (uuid_generate_v4(), 'Sonya', 'Boothroyd', 'sboothroyd5@yahoo.com', 'Female', '2018-04-24', '/sonya-boothroyd.png');
 -- insert into messenger.chat_user (user_uid, first_name, last_name, email, gender, date_of_birth, profile_pic) values (uuid_generate_v4(), 'Clerkclaude', 'Lortz', 'clortz6@yahoo.com', 'Male', '2017-03-09', '/default-profile-pic.png');
