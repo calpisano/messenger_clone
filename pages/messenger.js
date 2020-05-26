@@ -103,6 +103,10 @@ export default function MessengerLanding({ allThreadsDB, allUsersDB, allMessages
                                         
                                         }}>
             <MessengerMain>
+
+
+
+                {/* below is commented out dev test code.... */}
                 {/* <div>
                     <button
                         onClick={() => sendMessageFunc('manual update of chat')}>
