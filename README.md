@@ -32,10 +32,11 @@ npm install
 ```
 
 Second, run the NodeJS server...
-    1) Navigate to /Node-Server/messenger-server.js
-    2) ```bash
-        node messenger-server.js
-        ```
+1) Navigate to /Node-Server/messenger-server.js in your terminal
+2) start node development server:
+```bash
+node messenger-server.js
+ ```
 
 Third, run the NextJS/React Development server...
 ```bash
@@ -48,4 +49,3 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 =======
 # messenger_clone
-A fun chat/messenger clone -->
