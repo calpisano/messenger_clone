@@ -2,7 +2,7 @@ import { Container } from 'reactstrap';
 
 import styles from './conversation-list.module.css';
 
-import ThreadGetter1 from '../../../../../react-context/ThreadGetter1';
+import ThreadGetter1 from '../../../../../../react-context/ThreadGetter1';
 
 
 function friendDataFormatter(threadsObj = {}, usersObj = {}) {
