@@ -32,10 +32,11 @@ npm install
 ```
 
 Second, run the NodeJS server...
-    1) Navigate to /Node-Server/messenger-server.js
-    2) ```bash
-        node messenger-server.js
-        ```
+1) Navigate to /Node-Server/messenger-server.js
+2) 
+```bash
+node messenger-server.js
+ ```
 
 Third, run the NextJS/React Development server...
 ```bash
