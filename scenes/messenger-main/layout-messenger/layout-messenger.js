@@ -32,7 +32,7 @@ export default function LayoutMessenger(props) {
                     <Chat />
                 </Col>
             </Row>
-            {/* comment out props.children to remove scroll-bars */}
+            {/* To remove scroll-bars, comment out props.children */}
             {props.children} 
         </div>
     )

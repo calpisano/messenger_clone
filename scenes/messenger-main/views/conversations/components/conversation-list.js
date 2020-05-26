@@ -5,49 +5,31 @@ import styles from './conversation-list.module.css';
 import ThreadGetter1 from '../../../../../react-context/ThreadGetter1';
 
 
-// function objGenerator(num) {
-//     let arrayOfObjs = [];
-
-//     for (let i = 0; i < num; i++) {
-//         arrayOfObjs.push(
-//             {
-//                 id: i.toString(),
-//                 name: "Friend " + i.toString(),
-//                 imgURL: "/default-profile-pic.png",
-//                 lastMessage: "previous message"
-//             }
-//         )
-//     }
-
-//     return arrayOfObjs;
-// }
-
-function friendDataFormatter(friendsObject = {}) {
+function friendDataFormatter(threadsObj = {}, usersObj = {}) {
     // generate an array of objects, each object containing relevant information to generate the <li> items in the DOM
-
-
-    const friendEntries = Object.entries(friendsObject);
-    // Object.entries generates an array of arrays in the following format:
-    // [ key, {value} ] Where for every key in the object, an array is generated where the first element is the key name, and the second element is the value to that key, in whatever form it may be (another object, array, or literal, etc.)
+    let threads = threadsObj;
+    let users = usersObj;
 
     let arrayOfObjects = [];
 
-    for ( let [name, data] of friendEntries) {
-        // console.log(`name: ${name}, and data: ${data.uid}`);
-
+    for (let key in threads){
+        let entry = threads[key]; //object containing keys: user_uid and participant_user_uid
+        let guestID = entry.participant_user_uid;
+        let guestName = users[guestID].first_name + ' ' + users[guestID].last_name;
+        let profilePic = users[guestID].profile_pic;
+        
         arrayOfObjects.push(
             {
-                uid: data.uid,
-                name: data.name,
-                imgURL: data.profile_pic_url,
+                user_uid: guestID,
+                thread_uid: key,
+                name: guestName,
+                imgURL: profilePic,
                 lastMessage: 'previous message',
-                lastMessageTimestamp: data.last_message_timestamp
+                lastTimestamp: '2020-05-22 00:10:56.587309-07'
             }
+            
         )
-
     }
-
-    // console.log(arrayOfObjects);
 
     return arrayOfObjects;
 
@@ -59,17 +41,16 @@ function ListGenerator(props) {
 
     const array = props.array.slice();
     const highlightedFriend = props.highlightedFriend;
-    // console.log(array)
 
     const mapArray = array.map( (friend) => {
 
-        if (friend.uid == highlightedFriend){
+        if (friend.user_uid == highlightedFriend){
             //  highlight the friend whose chat thread the user is currently viewing 
             
             return (
                 // list item element with function and data binding
                 // data value is set to be the uid of the friend
-                <li key={ friend.uid } className={ `${styles.friendly_li} ${styles.friendly_selected}`} onClick={ handleClickOnFriend.bind(this, friend.uid) }>
+                <li key={ friend.user_uid } className={ `${styles.friendly_li} ${styles.friendly_selected}`} onClick={ handleClickOnFriend.bind(this, friend.user_uid, friend.thread_uid) }>
 
                     {/* profile picture element */}
                     <img className={styles.friendly_face} src={friend.imgURL} alt="friend's portrait" />
@@ -88,7 +69,7 @@ function ListGenerator(props) {
             return (
                 // list item element with function and data binding
                 // data value is set to be the uid of the friend
-                <li key={ friend.uid } className={ `${styles.friendly_li}`} onClick={ handleClickOnFriend.bind(this, friend.uid) }>
+                <li key={ friend.user_uid } className={ `${styles.friendly_li}`} onClick={ handleClickOnFriend.bind(this, friend.user_uid, friend.thread_uid) }>
 
                     {/* profile picture element */}
                     <img className={styles.friendly_face} src={friend.imgURL} alt="friend's portrait" />
@@ -108,13 +89,13 @@ function ListGenerator(props) {
     return mapArray
 }
 
-function handleClickOnFriend(val) {
+function handleClickOnFriend(friend_uid = '', thread_uid = '') {
 
-    selectConversation(val); // callback the function selectConversationFunc in pages/messenger.js
+    selectConversationFunc(friend_uid, thread_uid); // callback the function selectConversationFunc in pages/messenger.js
 
 }
 
-var selectConversation; // to be assigned value in default function ConversationList
+var selectConversationFunc; // to be assigned value in default function ConversationList
 
 
 
@@ -126,12 +107,12 @@ export default function ConversationList(props) {
 
     // let objArray = objGenerator(props.friendCount);
 
-    const currentConversations = React.useContext(ThreadGetter1).conversations; //object of objects
-    const currentFriendUID = React.useContext(ThreadGetter1).currentFriendUID; //currently selected friend (by uid)
+    const currentConversations = React.useContext(ThreadGetter1).conversations; // object of objects
+    const currentFriendUID = React.useContext(ThreadGetter1).currentFriendUID; // currently selected friend (by uid)
+    const userData = React.useContext(ThreadGetter1).allUserData;
+    selectConversationFunc = React.useContext(ThreadGetter1).selectConversation; // function to select new friend's conversation
 
-    selectConversation = React.useContext(ThreadGetter1).selectConversation;
-
-    const friendsListArray = friendDataFormatter(currentConversations);
+    const friendsListArray = friendDataFormatter(currentConversations, userData);
 
     return(
         

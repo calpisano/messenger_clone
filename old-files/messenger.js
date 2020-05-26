@@ -1,4 +1,4 @@
-
+/* 
 import MessengerMain from '../scenes/messenger-main/messenger-main'
 
 import fetch from 'node-fetch'
@@ -150,4 +150,4 @@ export async function getServerSideProps() {
         initialFriendSelect
       }
     }
-  }
+  } */

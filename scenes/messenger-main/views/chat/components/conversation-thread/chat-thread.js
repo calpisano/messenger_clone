@@ -10,54 +10,49 @@ export default function ChatThread() {
     var messagesEnd; // variable to which a dummy div is assigned to, to allow me to use function scrollToBottom();
 
 
-    // const rawdata = React.useContext(ThreadGetter1).messageThreads; // Consume context from (great?) grand-parent component
-    // const threadData = JSON.parse(rawdata);
-    // threadData is now an object containing all convo threads that the user has with other people
+    const relevantThread = React.useContext(ThreadGetter1).currentFriendThread; // array of objects containing messages, assumed to be in chronological order
+    const relevantFriend = React.useContext(ThreadGetter1).currentFriendUID; // user_uid string of selected friend
+    const hostUserID = React.useContext(ThreadGetter1).hostUserID;
+    
 
-    // TODO: move thread getting to modularized file
-    // const relevantThread = threadData.conversations.friend1.conversation_thread;
-    const relevantThread = React.useContext(ThreadGetter1).currentFriendThread;
-    // const currentUID = React.useContext(ThreadGetter1).currentFriendUID;
-    // console.log(relevantThread)
-
-    const scrollToBottom = () => {
+    const scrollToBottomSmooth = () => {
         messagesEnd.scrollIntoView({behavior: 'smooth'});
-        // console.log(messagesEnd);
     }
 
     // useEffect is similar to combining componentDidMount and componentDidUpdate
     useEffect(() => {
-        scrollToBottom();
-
-        // console.log('test UID: '+currentUID);
+        scrollToBottomSmooth();
 
     })
 
-    // scrollToBottom();
-
-    // console.log('rendering: chat-thread.js');
 
     return(
 
         <div className={styles.base_container}>
         
             {relevantThread.map((messageObject, index) => {
-                {/* console.log(baseContainerRef); */}
                 
-                if (messageObject.sender === 'self') {
+                if (messageObject.created_by_user_uid === hostUserID) { // message sent by host user
                     return(
-                        <div className={styles.chat_row} key={messageObject.timestamp}>
+                        <div className={styles.chat_row} key={messageObject.line_uid}>
                             <div className={styles.chat_bubble_self}> 
-                                <p>{messageObject.text}</p> 
+                                <p>{messageObject.line_text}</p> 
                             </div>
                         </div>
                     )
-                } else {
+                } else if (messageObject.created_by_user_uid === relevantFriend) { // message sent by friend
                     return(
-                        <div className={styles.chat_row}  key={messageObject.timestamp}>
+                        <div className={styles.chat_row}  key={messageObject.line_uid}>
                             <div className={styles.chat_bubble_friend}> 
-                                <p>{messageObject.text}</p> 
+                                <p>{messageObject.line_text}</p> 
                             </div>
+                        </div>
+                    )
+                }
+                else{
+                    console.error('Invalid chat_line user id in /chat-thread.js');
+                    return(
+                        <div key={index}>
                         </div>
                     )
                 }

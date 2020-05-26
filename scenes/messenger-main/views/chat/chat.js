@@ -1,5 +1,6 @@
 import styles from './chat.module.css'
 
+import ChatBanner from './components/banner/chat-banner'
 import ChatThread from './components/conversation-thread/chat-thread'
 import NewMessage from './components/new-message/new-message'
 
@@ -10,15 +11,9 @@ export default function Chat() {
 
     return(
         <div className={styles.base_container}>
-            <div className={styles.banner}>
-                <div className={styles.banner_box}>
-                    <img className={styles.banner_img} src='/default-profile-pic.png' alt="friend's name"/>
-                    <div className={styles.banner_name}>
-                        <h5>Friend's Name</h5>
-                        <p className="text-muted">Active 20m ago</p>
-                    </div>
-                </div>
-            </div>
+
+            <ChatBanner />
+            
             <div className={styles.chat_box_container}>
                 
                 <ChatThread />

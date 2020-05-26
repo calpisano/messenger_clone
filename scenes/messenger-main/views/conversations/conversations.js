@@ -11,8 +11,6 @@ export default function Conversations() {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const toggle = () => setDropdownOpen(prevState => !prevState);  
     
-    // const { height, width } = UseWindowDimensions();
-
     const header_dropdown = {
         position: "absolute",
         right: "0",
@@ -27,9 +25,8 @@ export default function Conversations() {
                 <img className={styles.banner_img} src="/dog-profile-pic.jpg" alt="profile pic"/>
                 <h2 className={styles.banner_header}><b>Chats</b></h2>
 
-                <Dropdown style={ header_dropdown } isOpen={dropdownOpen} toggle={toggle}>
+                {/* <Dropdown style={ header_dropdown } isOpen={dropdownOpen} toggle={toggle}>
                     <DropdownToggle color="transparent" caret>
-                        {/* dropdownToggle color property uses Bootstrap built in color themes */}
                         <img src="/icons8-settings-50.png" alt="settings" />
                     </DropdownToggle>
                     <DropdownMenu>
@@ -41,10 +38,10 @@ export default function Conversations() {
                         <DropdownItem>Bar Action</DropdownItem>
                     </DropdownMenu>
 
-                </Dropdown>
+                </Dropdown> */}
             </div>
             <div className={styles.conversations_container}>
-                <ConversationList friendCount={25}></ConversationList>     
+                <ConversationList />    
 
             </div>
             

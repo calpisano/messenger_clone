@@ -9,87 +9,79 @@ import ThreadGetter1 from '../react-context/ThreadGetter1'
 import { useState } from 'react'
 
 
-var initialFriendUID;
+function currentThreadBuilder(thread_uid = '', messagesDB = []) {
+    // this function builds an array of messages from filtering the repository of all messages using a given thread_uid
+    // Assumptions: messagesDB message entries, for a given thread_uid, are already stored in chronological
 
-(function initialConversationSelection() {
-    initialFriendUID = "1001";
-})();
+    let messageArray = [];
+    for (let message of messagesDB) {
+        if(message.thread_uid === thread_uid) {
+            messageArray.push(message);
+        }
+    }
+    return messageArray;
+};
 
 
 
-export default function MessengerLanding({ allDataChunk, allUsersDB, allMessagesDB, initialFriendSelect }) {
-    // prop: allDataChunk is a JS object
+export default function MessengerLanding({ allThreadsDB, allUsersDB, allMessagesDB, initialFriendSelect, initialThreadSelect, hostUserUID }) {
+    // props: allThreadsDB, allUsersDB are JS objects containing objects
+    // props: allMessagesDB is array of objects
+    // props: initialFriendSelect is String represenging a friend's user_uid
 
     // changes in state cause re-rendering. In this case, will also pass a prop to child subscribers of data which also re-render
-    const [ masterData, updateMasterData ] = useState( allDataChunk ); //this is only executed one time, no matter how many
-    const [ currentFriendUID , updateCurrentFriendUID ] = useState(initialFriendSelect);
 
-    const [ messageDataDB, updateMasterDataDB ] = useState( allMessagesDB ); // type string
-    const [ friendsList , updateFriendsList ] = useState( allUsersDB ); // type string
+    const [ currentThreadUID, updateCurrentThreadUID ] = useState(initialThreadSelect);
+    const [ currentFriendUID , updateCurrentFriendUID ] = useState(initialFriendSelect); // type String, selected friend uid string
+    const [ threadDataDB, updateThreadDataDB ] = useState( allThreadsDB ); // type Object, contains all thread_uid's belonging to host user, keys are thread_uid, value is object where keys are user_uid (of host) and participant_user_uid;
+    const [ chatLinesDB, updateChatLinesDB ] = useState( allMessagesDB ); // type Array of Objects, contains all messages of every thread in threadDataDB, each entry is unique chat message with fields: line_uid, thread_uid, created_by_user_uid, line_text, created_at_timestamp
+    const [ userDataDB , updateFriendDataDB ] = useState( allUsersDB ); // type Object, contains all user data
+    const [ hostUserID , updateHostUserID ] = useState( hostUserUID ); //type String, representing host user's uid
 
-    // console.log("currentFriendUID: "+ currentFriendUID);
+    console.log('rendering...: ' + chatLinesDB.length)
     
-    var currentFriendThread = masterData.conversations[currentFriendUID].conversation_thread;
+    var currentFriendThread = currentThreadBuilder(currentThreadUID, chatLinesDB);
 
-    const selectConversationFunc = (friendUID) => {
-        // currentFriendUID = String(friendUID);
-        updateCurrentFriendUID(String(friendUID));
-        // console.log('select new conversation of UID: '+ currentFriendUID);
 
-        currentFriendThread = masterData.conversations[friendUID].conversation_thread;
+    const selectConversationFunc = (friend_uid = '', thread_uid = '') => {
 
-        // console.log('currentFriendThread: ', currentFriendThread);
+        updateCurrentFriendUID(friend_uid);
+
+        updateCurrentThreadUID(thread_uid);
 
     };
 
-    // const [ threadDataStr, updateThread ] = useState( JSON.stringify(allDataChunk) );
 
-
-    // selectConversationFunc(initialFriendUID);
-
-
-
-    // If I define my method with 2 fat arrows, then in html template, instead of calling it in render as: {() => sendMessageFunc(param)}, I can simply call it as {sendMessageFunc(param)}
-    //https://stackoverflow.com/questions/51863058/what-is-the-difference-between-both-button-click-in-the-given-react-component/51863128#51863128
     
     const sendMessageFunc = (message) => {
         // sendMessageFunc is passed into the React Context ThreadGetter1, and is invoked by child component new-message.js . When called, it uses http to post the most recent chat message to the server, and receives the most recent chat data in the form of a stringified JSON
 
-        // console.log('sending message to friendUID: '+friendUID);
-
-        // build a string displaying the current time of message send
-        let now = new Date();
-        let timestamp = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + ':' + now.getMilliseconds();
-
-        // build the chat message entry object, to be appended to an array of objects
-        let newMessage = {
-            text: message,
-            timestamp: timestamp,
-            sender: 'self',
-            currentFriendUID: currentFriendUID
+        let newMessageDB = {
+            line_text: message,
+            created_by_user_uid: hostUserID,
+            thread_uid: currentThreadUID
         };
-        // console.log(newMessage);
 
         (async () => {
-            const rawResponse = await fetch(`http://127.0.0.1:8080/post_new_message`, {
+
+            // first, post new message to database for corresponding thread_uid
+            const threadResponse = await fetch(`http://127.0.0.1:9090/post_new_message_to_thread`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(newMessage)
-            });
-            const content = await rawResponse.json();
-            // content (response) is all message data for all friends
+                body: JSON.stringify(newMessageDB)
+            })
+            .then( async (response) => {
+                try {
+                    const chatLineResponse = await fetch(`http://127.0.0.1:9090/get_initial_chat_lines`);
+                    updateChatLinesDB(await chatLineResponse.json()); // type JS Object
+                } catch(error) {
+                    console.error('Cannot get chat line response...', error);
+                }
+            })
+            .catch(err => console.error('Problem sending new chat messages...', err))
 
-            // updateThreadRender(content);
-            updateMasterDataRender(content);
-
-            // console.log(content);
         })();
 
-    }
-
-    const updateMasterDataRender = (data) => {
-        console.log('fire');
-        updateMasterData(data); 
     }
 
 
@@ -98,27 +90,28 @@ export default function MessengerLanding({ allDataChunk, allUsersDB, allMessages
         // React Context, when updated, triggers a rerender of the component using useContext
         <ThreadGetter1.Provider value={{
                                         // ThreadGetter1 can now be accessed by any child of messenger.js
-                                        // messageThreads: threadDataStr, // if I update the local value of messageThreads, then the prop will be passed to children observing this value and they will rerender accordingly
 
-                                        masterData: masterData, // entire repo of data
                                         currentFriendUID: currentFriendUID, // currently selected friend to view
                                         currentFriendThread: currentFriendThread, //array of objects containing message thread for currently selected friend 
-                                        conversations: masterData.conversations, //object of objects representing friends list
+                                        // conversations: masterData.conversations, //object of objects representing friends list
+                                        
+                                        conversations: threadDataDB, // object containing thread_uid as keys. Values are corresponding user_uid and participant_user_uid
+                                        allUserData: userDataDB, // object containing user_uid as keys. Values are corresponding name, email, etc...
+                                        hostUserID: hostUserID,
                                         selectConversation: selectConversationFunc, // function to switch friends
-
                                         sendNewMessage: sendMessageFunc // function to send message to current friend
                                         
                                         }}>
             <MessengerMain>
-                <div>
+                {/* <div>
                     <button
                         onClick={() => sendMessageFunc('manual update of chat')}>
                         Manually update thread data
                     </button>
-                    <p>
-                        {friendsList}
-                    </p>
                 </div>
+                <div>
+                    Icons by <a target="_blank" href="https://icons8.com">Icons8</a> <br />
+                </div> */}
 
                 
             </MessengerMain>
@@ -132,46 +125,64 @@ export async function getServerSideProps() {
     // getting props can only be called on Page file, not component files
     // Get external data from the file system, API, DB, etc.
     // https://nextjs.org/blog/next-9-3 <-- next.js docs on getServerSideProps()
+
+    // const resTest2 = await fetch(`http://127.0.0.1:9090/`);
+    // const testMessage2 = await resTest2.text();
+    // console.log(testMessage2);
+
+    try {
+        const resThreadsDB = await fetch(`http://127.0.0.1:9090/get_initial_chat_thread`);
+        const allThreadsDB = await resThreadsDB.json() // type JS Object of Objects
+
+        const resUsersDB = await fetch(`http://127.0.0.1:9090/get_initial_chat_user`);
+        const allUsersDB = await resUsersDB.json(); // type JS Object of Objects
+        
+
+        const resAllMessagesDB = await fetch(`http://127.0.0.1:9090/get_initial_chat_lines`);
+        const allMessagesDB = await resAllMessagesDB.json(); // type Array of Objects
+
+
+        const hostUserUID = "d856c932-9291-4e71-bf4c-3131b2b6e535";
+        const initialFriendSelect = "91e20e0e-9d3e-4d21-8ecc-218f1def8572"; // when this web page is first open, initially open convo of this friend by default
+        const initialThreadSelect = "79910454-1d26-41d2-8263-c0780440926b";
+
     
-    // dev test getting text data from server
-    // const resTest = await fetch(`http://127.0.0.1:8080/`);
-    // const testMessage = await resTest.text();
-    // console.log(testMessage);
-
-    const resTest2 = await fetch(`http://127.0.0.1:9090/`);
-    const testMessage2 = await resTest2.text();
-    console.log(testMessage2);
-
-    const resAllData = await fetch(`http://127.0.0.1:8080/get_initial_thread`);
-    const allDataChunk = await resAllData.json(); //res.body is received in json string and subsequently PARSED, devTest2 is now an object
-
-
-    const resThreadsDB = await fetch(`http://127.0.0.1:9090/get_initial_chat_thread`);
-    const allThreadsDB = await resThreadsDB.text() // type String
-
-    const resUsersDB = await fetch(`http://127.0.0.1:9090/get_initial_chat_user`);
-    const allUsersDB = await resUsersDB.text(); // type String
-    
-
-    const resAllMessagesDB = await fetch(`http://127.0.0.1:9090/get_initial_chat_lines`);
-    const allMessagesDB = await resAllMessagesDB.text(); // type String
+        // The value of the `props` key will be passed to the `Home` component
+        return {
+            props: {
+                allThreadsDB,
+                allUsersDB,
+                allMessagesDB,
+                initialFriendSelect,
+                initialThreadSelect,
+                hostUserUID
+            }
+        }
 
 
-    // console.log(typeof allFriendsDB);
+    } catch(error){
+
+        console.log('error getServerSideProps ' + error);
+        const allThreadsDB = {};
+        const allUsersDB = {};
+        const allMessagesDB = [{}];
+        const hostUserUID = "d856c932-9291-4e71-bf4c-3131b2b6e535";
+        const initialFriendSelect = "91e20e0e-9d3e-4d21-8ecc-218f1def8572"; // when this web page is first open, initially go to this default friend
+        const initialThreadSelect = "79910454-1d26-41d2-8263-c0780440926b";
 
 
-    const initialFriendSelect = "1001"; // when this web page is first open, initially go to this default friend
+        return {
+            props: {
+                allThreadsDB,
+                allUsersDB,
+                allMessagesDB,
+                initialFriendSelect,
+                initialThreadSelect,
+                hostUserUID
+            }
+        }
+        
 
-  
-    // The value of the `props` key will be
-    //  passed to the `Home` component
-    return {
-      props: {
-        allDataChunk,
-        allThreadsDB,
-        allMessagesDB,
-        allUsersDB,
-        initialFriendSelect
-      }
+
     }
   }

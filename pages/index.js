@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 
 
+// This is code for the home page, from which you navigate to the Messenger Clone
 export default function Home() {
   return (
     <div className="container">
@@ -11,9 +12,10 @@ export default function Home() {
       </Head>
 
       <main>
-        <Link href="/old-readme"><a>old-readme</a></Link><br />
-        <Link href="/messenger"><a>To Messenger</a></Link>
-        
+        <Link href="/messenger"><a>Click here to go to Messenger Clone!</a></Link>
+        <br />
+        <p>By <a href="http://www.calpisano.com" target="_blank">Chris Pisano</a></p>
+
       </main>
 
       <footer>
@@ -43,6 +45,10 @@ export default function Home() {
           flex-direction: column;
           justify-content: center;
           align-items: center;
+        }
+
+        main * {
+          font-size: 120%;
         }
 
         footer {
