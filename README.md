@@ -20,14 +20,25 @@ PostgreSQL
 
 ## My Messenger Clone project
 
-Hi, I'm Chris and I am currently building a lite messenger web app. I am using React and Next.JS, for the front-end framework, and I am using NodeJS to simulate communication with a server. I haven't uploaded the code for the NodsJS server to GitHub but I will do so soon!
+Hi, I'm Chris and I am currently building a lite messenger web app. I am using React and Next.JS for the front-end framework, and I am using NodeJS to simulate communication with a database built using PostgreSQL.
 
 ## Getting Started
 
-First, run the development server:
+Note: Postgres Database must be set up to work...
 
+First initialize npm:
 ```bash
-npm intstall
+npm install
+```
+
+Second, run the NodeJS server...
+    1) Navigate to /Node-Server/messenger-server.js
+    2) ```bash
+        node messenger-server.js
+        ```
+
+Third, run the NextJS/React Development server...
+```bash
 npm run dev
 # or
 yarn dev

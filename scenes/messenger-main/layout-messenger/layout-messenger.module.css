@@ -9,17 +9,3 @@
     background-color: red;
 }
 
-/* modifying reactstrap Row and Column elements produces unexpected results. It's better to create style objects in the .JS file and insert them into elements using style={ styleObject } */
-/* .row {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    border: 0; 
-} */
-
-/* .column {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    border: 0; 
-} */

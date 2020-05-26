@@ -6,7 +6,6 @@
 
 .friendly_li {
     height: 6rem;
-    /* border: green solid 1px; */
     margin-bottom: 0.2rem;
 
     display: flex;
@@ -16,7 +15,6 @@
 }
 
 .friendly_selected {
-    /* border: green solid 1px; */
     background-color: gainsboro;
 }
 
@@ -43,7 +41,6 @@
     align-self: center;
     height: 100%;
     width: 65%;
-    /* border: blue solid 1px; */
     
     padding: 1rem 0 1rem 0;
     margin: 0 0 0 1.2rem;
