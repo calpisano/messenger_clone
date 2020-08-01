@@ -25,10 +25,13 @@ export default function ChatThread() {
 
     })
 
+    console.log(relevantFriend);
+
 
     return(
 
         <div className={styles.base_container}>
+
         
             {relevantThread.map((messageObject, index) => {
                 
